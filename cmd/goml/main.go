@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/JulzDiverse/goml"
-	"github.com/fatih/color"
+        "github.com/fatih/color"
 	"github.com/urfave/cli"
 )
 
@@ -62,6 +62,17 @@ func main() {
 				cli.StringFlag{Name: "dp", Usage: "destination property path (string) - foo.bar.zoo"},
 			},
 		},
+                {
+                        Name:   "purge",
+                        Usage:  "Purge Property",
+                        Action: purgeParam,
+                        Flags: []cli.Flag{
+				cli.StringFlag{Name: "file, f", Usage: "path to YAML file"},
+				cli.StringFlag{Name: "prop, p", Usage: "property path (string) - foo.bar.zoo"},
+				cli.StringFlag{Name: "df", Usage: "destination YAML file"},
+				cli.StringFlag{Name: "dp", Usage: "destination property path (string) - foo.bar.zoo"},
+                        },
+                },
 	}
 	cmd.Run(os.Args)
 }
@@ -112,6 +123,16 @@ func transferParam(c *cli.Context) {
 	}
 
 	err := goml.TransferToFile(c.String("file"), c.String("prop"), c.String("df"), c.String("dp"))
+	exitWithError(err)
+}
+
+func purgeParam(c *cli.Context) {
+	if c.NumFlags() != 6 {
+		cli.ShowAppHelp(c)
+		exitWithError(errors.New("invalid number of arguments"))
+	}
+
+	err := goml.PurgeToFile(c.String("file"), c.String("prop"), c.String("df"), c.String("dp"))
 	exitWithError(err)
 }
 

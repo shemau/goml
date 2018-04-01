@@ -223,3 +223,14 @@ $ goml transfer --file <yaml-file> --prop <path.to.property> --df <destination-f
 *Note:*
 - The syntax for the source property is the same as for  `set`
 - The syntax for the destination property is the same as for `get`
+
+## Purge Properties with `purge`
+
+Purge is to remove duplicate equivalent keys from the destination file
+
+```
+$ goml purge --file <yaml-file> --df <destination-file> --no-apply
+```
+
+--no-apply lists the changes, but does not apply changes to the destination file.
+
